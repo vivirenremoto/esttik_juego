@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>🍔🍔🍔 Reto 100 hamburguesas en 1 minuto - Juego Esttik 🍔🍔🍔</title>
+    <title>🍔🍔🍔 Reto 200 hamburguesas en 1 minuto - Juego Esttik 🍔🍔🍔</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -29,10 +29,10 @@
 
     <meta property="og:image" content="https://vivirenremoto.github.io/esttik_juego/static/social.png">
     <meta property="og:image:secure_url" content="https://vivirenremoto.github.io/esttik_juego/static/social.png">
-    <meta property="og:image:alt" content="Reto 100 hamburguesas en 1 minuto - Juego Esttik">
+    <meta property="og:image:alt" content="Reto 200 hamburguesas en 1 minuto - Juego Esttik">
     <meta property="og:image:type" content="image/png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Reto 100 hamburguesas en 1 minuto - Juego Esttik">
+    <meta name="twitter:title" content="Reto 200 hamburguesas en 1 minuto - Juego Esttik">
     <meta name="twitter:image" content="https://vivirenremoto.github.io/esttik_juego/static/social.png">
 
 </head>
@@ -129,16 +129,15 @@
 
     <div id="intro" style="position:fixed;left:0;right:0;top:0;bottom:0;">
 
-        <a href="https://twitter.com/vivirenremoto" target="_blank"
-            style="display:none;font-size:30px;position:fixed;right:10px;top:10px;z-index:2;color:black;text-decoration:none;">by
-            @vivirenremoto</a>
+        <div style="font-size:30px;position:fixed;right:10px;top:10px;z-index:2;color:black;text-decoration:none;">by
+            @vivirenremoto</div>
 
 
         <div
             style="text-align:center;position:fixed;left:50%;top:50%;width:400px;height:544px;margin-left:-200px;margin-top:-240px;">
             <img src="static/avatar.jpg" style="border-radius:100px;border:5px black solid;" width="150" height="150">
             <h1 style="margin:15px;color:red;font-size:80px;line-height:65px;">Reto Esttik</h1>
-            <div style="color:black;font-size:50px">🍔100 🕒1:00</div>
+            <div style="color:black;font-size:50px">🍔200 🕒1:00</div>
             <br><br>
             <button onclick="startLoading()" style="font-size:30px;">EMPEZAR</button>
         </div>
@@ -206,11 +205,14 @@
         style="color:white;text-align:center;font-size:50px;font-weight:bold;display:none;position:fixed;left:0;right:0;top:0;bottom:0;background:black url('static/cuerpo.jpg') no-repeat top center;">
 
         <div style="text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8); ">
-            <br>
+
+
+            <div style="margin:15px 0;" id="record">&nbsp;</div>
+
 
             Hamburguesas
 
-            <div id="total" style="font-size:180px;color:red;line-height:100px;padding:10px 0 60px 0;">
+            <div id="total" style="font-size:180px;color:red;line-height:100px;padding:10px 0 35px 0;">
                 0
             </div>
 
@@ -226,7 +228,7 @@
             <button onclick="location.reload(); "
                 style="font-size:30px;border-color:white;background:black;color:white;">¿REPETIR?</button>
             <button onclick="share()"
-                style="display:none;font-size:30px;border-color:white;background:black;color:white;">COMPARTIR</button>
+                style="font-size:30px;border-color:white;background:black;color:white;display:none;">COMPARTIR</button>
         </div>
     </div>
 
@@ -264,6 +266,7 @@
         var item_height = 200;
         var item_delay = 1;
         var time_left = 60;
+        var record = 200;
         var current_count = 0;
         var water_width = 170;
         var water_height = 170;
@@ -407,9 +410,19 @@
                 $('#total').animateNumbers(count_items, false);
                 $("#kcal").animateNumbers(237 * count_items, false);
 
+
+                setTimeout(function () {
+                    if (count_items >= record) {
+                        $('#record').html('RETO SUPERADO').css('color', '#00ff00');
+                    } else {
+                        $('#record').html('RETO FALLIDO').css('color', '#ff0000');
+                    }
+                }, 1000);
+
                 setTimeout(function () {
                     $('#actions').show();
-                }, 1200);
+                }, 2000);
+
             }, 1000);
         }
 

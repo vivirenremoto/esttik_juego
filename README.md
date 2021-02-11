@@ -1,4 +1,4 @@
-# Reto 100 hamburguesas en 1 minuto - Juego Esttik
+# Reto 200 hamburguesas en 1 minuto - Juego Esttik
  
 [Web - Juego](https://vivirenremoto.github.io/esttik_juego/)
 
