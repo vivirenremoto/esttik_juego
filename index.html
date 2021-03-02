@@ -839,42 +839,36 @@
             $('#result').hide();
             $('#leaderboard').show();
 
-            var total_rows = $("#leaderboard_table tr").length;
 
+            $.getJSON("https://games.vivirenremoto.com/?game=esttik&action=rank", function (data) {
+                var items = [];
+                $.each(data, function (key, val) {
 
-            if (total_rows == 1) {
+                    var emoji = '';
 
-                $.getJSON("https://games.vivirenremoto.com/?game=esttik&action=rank", function (data) {
-                    var items = [];
-                    $.each(data, function (key, val) {
+                    if (key == 0) {
+                        emoji = '🥇 ';
+                    } else if (key == 1) {
+                        emoji = '🥈 ';
+                    } else if (key == 2) {
+                        emoji = '🥉 ';
+                    } else {
+                        emoji = key + 1;
+                    }
 
-                        var emoji = '';
-
-                        if (key == 0) {
-                            emoji = '🥇 ';
-                        } else if (key == 1) {
-                            emoji = '🥈 ';
-                        } else if (key == 2) {
-                            emoji = '🥉 ';
-                        } else {
-                            emoji = key + 1;
-                        }
-
-                        items.push('<tr><td width="1">' + emoji + '</td><td width="70%">' + val.name + '</td><td width="30%">' + val.score + '</td></tr>');
-                    });
-
-                    $("#leaderboard_table").append(items.join(""));
-
-
-                    confetti.start();
-
-                    setTimeout(function () {
-                        confetti.stop();
-                    }, 2000);
-
+                    items.push('<tr><td width="1">' + emoji + '</td><td width="70%">' + val.name + '</td><td width="30%">' + val.score + '</td></tr>');
                 });
 
-            }
+                $("#leaderboard_table").append(items.join(""));
+
+
+                confetti.start();
+
+                setTimeout(function () {
+                    confetti.stop();
+                }, 2000);
+
+            });
 
 
 
