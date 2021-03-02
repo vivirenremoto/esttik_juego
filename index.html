@@ -74,11 +74,14 @@
             touch-action: pan-x pan-y;
         }
 
-        button {
+        button,
+        .button {
+            text-decoration: none;
+            ;
             border: 5px black solid;
             color: black;
             background: white;
-            padding: 5px 30px;
+            padding: 5px 0;
             display: inline-block;
             font-size: 30px;
             font-weight: bold;
@@ -242,8 +245,8 @@
             <br><br>
             <button onclick="showLeaderboard()"><span style="font-size:20px">🏆</span> Ranking</button>
             <br><br>
-            <button onclick="window.open('https://www.youtube.com/watch?v=4iQr4pnTqEc')"
-                style="font-size:30px;">VIDEO</button>
+            <a href="https://www.youtube.com/watch?v=4iQr4pnTqEc" target="_blank" class="button"
+                style="font-size:30px;">VIDEO</a>
         </div>
     </div>
 
