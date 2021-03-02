@@ -840,6 +840,8 @@
             $('#leaderboard').show();
 
 
+            $("#leaderboard_table").html('');
+
             $.getJSON("https://games.vivirenremoto.com/?game=esttik&action=rank", function (data) {
                 var items = [];
                 $.each(data, function (key, val) {
