@@ -68,6 +68,9 @@
             user-select: none;
             /* Non-prefixed version, currently
                             supported by Chrome, Edge, Opera and Firefox */
+
+            /* evitar elementos seleccionados al clicar */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -77,18 +80,19 @@
         button,
         .button {
             text-decoration: none;
-            ;
             border: 5px black solid;
             color: black;
             background: white;
             padding: 5px 0;
-            display: inline-block;
             font-size: 30px;
             font-weight: bold;
             border-radius: 5px;
             cursor: pointer;
             text-transform: uppercase;
-            min-width: 250px;
+            width: 250px;
+            margin: auto;
+            display: block;
+            margin-top: 15px;
         }
 
         /* game */
@@ -183,7 +187,6 @@
 
             #result button {
                 display: block;
-                width: 200px;
                 margin: auto;
                 margin-bottom: 20px;
             }
@@ -240,13 +243,20 @@
             <img src="static/avatar.jpg" style="border-radius:100px;border:5px black solid;" width="150" height="150">
             <h1 style="margin:15px;color:red;font-size:80px;line-height:65px;">Reto Esttik</h1>
             <div style="color:black;font-size:50px">🍔200 🕒1:00</div>
-            <br><br>
-            <button onclick="startLoading()" style="font-size:30px;">JUGAR</button>
-            <br><br>
+            <br>
+
+            <button onclick="startLoading()">JUGAR</button>
+
             <button onclick="showLeaderboard()"><span style="font-size:20px">🏆</span> Ranking</button>
-            <br><br>
-            <a href="https://www.youtube.com/watch?v=4iQr4pnTqEc" target="_blank" class="button"
-                style="font-size:30px;">VIDEO</a>
+
+
+            <a href="https://www.youtube.com/watch?v=4iQr4pnTqEc" target="_blank" class="button">VIDEO</a>
+
+            <!--
+            <a href="https://bit.ly/3rbn8fE" target="_blank"><img src="static/android.png"
+                    style="width: 160px;margin-top: 30px;border:0;"></a>
+            -->
+
         </div>
     </div>
 
@@ -262,7 +272,8 @@
 
 
             <br><br><br>
-            <img src="static/guante.png" align="absmiddle" width="40" height="40" style="margin:9px;"> Come del tirón 5
+            <img src="static/guante.png" align="absmiddle" width="40" height="40" style="margin:9px;"> Come del
+            tirón 5
             🍔
 
             <br><br>
@@ -343,12 +354,16 @@
                 style="font-size:30px;border-color:white;background:black;color:white;"><span
                     style="font-size:25px">🏆</span> Ranking</button>
             <!--<button onclick="share()"
-                style="font-size:30px;border-color:white;background:black;color:white;">COMPARTIR</button>-->
+                style="font-size:30px;border-color:white;background:black;color:white;">COMPARTIR</button>
+            -->
+
             <div style="text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);margin-top:20px; ">Compartir</div>
 
             <img src="static/shareIcons/twitter.png" class="btn_social" alt="twitter">
             <img src="static/shareIcons/facebook.png" class="btn_social" alt="facebook">
             <img src="static/shareIcons/whatsapp.png" class="btn_social" alt="whatsapp">
+
+
 
 
 
@@ -412,10 +427,13 @@
         var water_width = 170;
         var water_height = 170;
         var item_opacity = 1;
-        var water_rand = 5;
+        var water_rand_max = 20;
+        var water_rand_min = 17;
+        var water_rand = water_rand_min;
         var score_height = 60;
         var game_played;
-
+        var guante_wait = 4500;
+        var cara_wait = 250;
 
         if (document.location.href.indexOf('test') > -1) {
             time_left = 10;
@@ -442,9 +460,13 @@
             item_height = 100;
             max_items = 10;
 
-            //$('#cara').css('width', '120px').css('height', '120px');
-        } else {
-            water_rand = 10;
+
+            water_rand_max = 10;
+            water_rand_min = 5;
+            water_rand = water_rand_min;
+            guante_wait = 5000;
+            cara_wait = 500;
+
         }
 
 
@@ -479,6 +501,8 @@
                 music_playing = true;
                 music.play();
             }
+
+            water_rand = randomNumber(water_rand_min, water_rand_max);
 
 
             clearInterval(timer_loading);
@@ -520,7 +544,7 @@
                     addFood(max_items - total_items);
                 }
             }, 3000);
-
+ 
             */
 
 
@@ -545,7 +569,7 @@
 
 
 
-            }, 5000);
+            }, guante_wait);
         }
 
         function endGame() {
@@ -658,7 +682,7 @@
                 }, 1000)
             }
             
-
+ 
             updateCounter(obj);
             */
 
@@ -671,10 +695,10 @@
 
             /*
             clearTimeout(timer_cara);
-
-
+ 
+ 
             $('#cara').css('top', $(obj).css('top')).css('left', $(obj).css('left')).show();
-
+ 
             timer_cara = setTimeout(function () {
                 $('#cara').hide();
             }, 700);
@@ -703,7 +727,6 @@
             sound_water.pause();
             sound_water.play();
 
-            water_rand = randomNumber(5, 9);
 
             item_opacity = 1;
             current_count = 0;
@@ -773,7 +796,7 @@
 
                 setTimeout(function () {
                     $(obj).remove();
-                }, 500);
+                }, cara_wait);
 
 
 
@@ -832,7 +855,24 @@
         }
 
         function share() {
-            window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title + ' 👊 ¡Supera mi puntuación! 🔥' + count_items) + '&tw_p=tweetbutton&url=' + document.location.href);
+
+
+            var share_title = document.title;
+            var share_url = document.location.href;
+
+            if (count_items) {
+                share_title += ' 👊 ¡Supera mi puntuación! 🔥' + count_items;
+            }
+
+            if (navigator.share) {
+                navigator.share({
+                    title: share_title,
+                    url: share_url
+                });
+
+            } else {
+                window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(share_title) + '&tw_p=tweetbutton&url=' + encodeURIComponent(share_url));
+            }
 
         }
 
@@ -904,7 +944,7 @@
 
 
                 var share_message = document.title;
-                if (score) {
+                if (count_items) {
                     share_message += ' 👊 ¡Supera mi puntuación! 🔥' + count_items;
                 }
 
